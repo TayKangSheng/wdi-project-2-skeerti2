@@ -1,0 +1,40 @@
+<div class="media">
+  <div class="media-left">
+    <a href="#">
+      <img class="media-object" src="../images/chef-pic.jpg" alt="chef-pic">
+    </a>
+  </div>
+  <div class="media-body">
+    <h1 class="media-heading"><%=chefItem.name%></h1>
+    <%chefItem.recipes.forEach(function(recipeItem) {%>
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+    <h3 class="panel-title">Thai Green Curry</h3>
+    </div>
+      <div class="panel-body">
+
+        <ul class="list-group">
+        <li class="list-group-item">Ingredients: <%=recipeItem.ingredients%></li>
+        <li class="list-group-item">Preparation time(mins): <%=recipeItem.prepTime%></li>
+        <li class="list-group-item">Cost (SGD): <%=recipeItem.cost%>
+          <button type="button" class="btn btn-default">Place Order >> </button>
+          </li>
+        </ul>
+        <ul class="list-group">
+        <%chefItem.comments.forEach(function(item){%>
+            <li class="list-group-item"><%=item.content%></li>
+          <%})%>
+        </ul>
+        <form action= <%="/chefs/"+ chefItem._id%> method="post">
+        <div class="form-group">
+          <label for="comments">Add a Review</label>
+          <input type="text" class="form-control" name="users[name]" id="reviewcommentid" placeholder="review">
+          <button type="submit" class="btn btn-success">Comment</a>
+        </div>
+        </form>
+    </div>
+    <%})%>
+
+</div>
+  </div>
+</div>
