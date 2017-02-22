@@ -29,7 +29,7 @@ var chefController = {
     // })
     Chef.findById(req.params.id)
       .populate('recipes')
-      // .populate('comments')
+      .populate('comments')
       //  .populate('comments')
       .exec(function (err, populatedChefItem) {
         if (err) {

@@ -49,7 +49,7 @@ app.use(expressLayouts)
 // app.engine('ejs', require('ejs').renderFile)
 app.set('view engine', 'ejs')
 
-const port = 3000
+const port = process.env.PORT||3000
 
 app.use(function (req, res, next) {
   // console.log('req.user is: ' +req.user)
@@ -136,7 +136,7 @@ var dish1 = new Dish({
   'cost': 15,
   'prepTime': 25
 })
-//dish1.save()
+dish1.save()
 
 var dish2 = new Dish({
   'dishName': 'Pasta',
@@ -144,7 +144,7 @@ var dish2 = new Dish({
   'cost': 15,
   'prepTime': 15
 })
-//dish2.save()
+dish2.save()
 
 var dish3 = new Dish({
   'dishName': 'Biriyani',
@@ -152,16 +152,16 @@ var dish3 = new Dish({
   'cost': 15,
   'prepTime': 20
 })
-//dish3.save()
+dish3.save()
 
 var chef1 = new Chef({'name': 'Sruti Keerti Munukutla', 'intro': 'Cooking is the best stressbuster',
   'cuisines': ['Indian', 'Thai'],
   'recipes': [dish1.id, dish3.id]})
-//chef1.save()
+chef1.save()
 var chef2 = new Chef({'name': 'Prashant Gorthi', 'intro': 'Amateur chef who can cook up a storm',
   'cuisines': ['Indian', 'Thai', 'italian'],
   'recipes': [dish2.id]})
-   //chef2.save()
+   chef2.save()
 
 // app.use(session({
 //   secret: process.env.SESSION_SECRET,

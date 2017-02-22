@@ -29,7 +29,7 @@ var postController = {
             console.error(err)
             return
           }
-          res.render('chefs/show', {chefItem: populatedChefItem})
+          res.redirect('/chefs/'+ chefId)
         }
       )
     })
