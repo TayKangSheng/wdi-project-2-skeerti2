@@ -29,17 +29,17 @@ var chefController = {
     // })
     Chef.findById(req.params.id)
       .populate('recipes')
-      .populate('comments')
+      // .populate('comments')
       //  .populate('comments')
-      .exec(function(err, populatedChefItem){
-        if(err) {
+      .exec(function (err, populatedChefItem) {
+        if (err) {
           console.error(err)
           return
         }
       // req.params.comments.identifier = req.params.id
-
+        console.log(populatedChefItem)
               // console.log(req.params.comments)
-        res.render('chefs/show', {chefItem:populatedChefItem})
+        res.render('chefs/show', {chefItem: populatedChefItem})
       })
   }
 }

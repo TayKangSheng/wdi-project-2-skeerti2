@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema
 
 const dishSchema = new mongoose.Schema({
+  dishName: String,
   ingredients: String,
   cost: Number,
   prepTime: Number

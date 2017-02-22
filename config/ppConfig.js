@@ -66,6 +66,10 @@ module.exports = function (passport) {
     // call next() middleware without error arguments
         let newUser = new User({
           local: {
+            firstName: req.body.firstName,
+            LastName: req.body.LastName,
+            Address: req.body.Address,
+            postalCode: req.body.postalCode,
             email: email,
         // password: password
             password: User.encrypt(password)
