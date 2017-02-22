@@ -43,9 +43,9 @@ var chefController = {
       })
   },
 
-  listByCuisine: (req, res) =>{
-    Chef.find({"cuisines": {$regex: req.body.search_query, $options: 'i'}}, function(err, output){
-      if(err){
+  listByCuisine: (req, res) => {
+    Chef.find({'cuisines': {$regex: req.body.search_query, $options: 'i'}}, function (err, output) {
+      if (err) {
         console.error(err)
         return
       }
@@ -53,9 +53,9 @@ var chefController = {
     })
   },
 
-  listByFavChef: (req, res) =>{
-    Chef.find({"name": {$regex: req.body.search_query_name, $options: 'i'}}, function(err, output){
-      if(err){
+  listByFavChef: (req, res) => {
+    Chef.find({'name': {$regex: req.body.search_query_name, $options: 'i'}}, function (err, output) {
+      if (err) {
         console.error(err)
         return
       }

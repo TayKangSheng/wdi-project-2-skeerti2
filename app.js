@@ -53,6 +53,7 @@ const port = process.env.PORT||3000
 
 app.use(function (req, res, next) {
   // console.log('req.user is: ' +req.user)
+  res.locals.alert = req.flash()
   res.locals.user = req.user
   // console.log('res.locals.user is '+res.locals.user)
   res.locals.isAuthenticated = req.isAuthenticated()
@@ -75,10 +76,11 @@ app.set('views', path.join(__dirname, 'views'))
 function isNotLoggedIn (req, res, next) {
   if (req.isAuthenticated()) return next()
    else {
-  req.flash('flash', {
-    type: 'danger',
-     message: 'please log in'
-   })
+  // req.flash('flash', {
+  //   type: 'danger',
+  //    message: 'please log in'
+  //  })
+  req.flash('danger', 'please log in')
    res.redirect('/login')
 }
 }
@@ -87,10 +89,11 @@ function isLoggedIn (req, res, next) {
   if (req.isAuthenticated() === true) {
     next()
   } else {
-    req.flash('flash', {
-      type: 'danger',
-      message: 'Restricted page, please log in'
-    })
+    // req.flash('flash', {
+    //   type: 'danger',
+    //   message: 'Restricted page, please log in'
+    // })
+    req.flash('danger', 'Restricted page, please log in')
     console.log('restricted page, please log in')
     res.redirect('/login')
   }

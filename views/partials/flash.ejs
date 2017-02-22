@@ -1,0 +1,17 @@
+<% if(alert && alert.warning) { %>
+<% alert.warning.forEach(function(msg) { %>
+  <div class="alert alert-warning"><%=msg%></div>
+  <%})%>
+<% } %>
+
+<% if(alert && alert.success) { %>
+<% alert.success.forEach(function(msg) { %>
+  <div class="alert alert-success"><%=msg%></div>
+  <%})%>
+<% } %>
+
+<% if(alert && alert.danger) { %>
+<% alert.danger.forEach(function(msg) { %>
+  <div class="alert alert-danger"><%=msg%></div>
+  <%})%>
+<% } %>
