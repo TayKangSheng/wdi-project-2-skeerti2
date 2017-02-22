@@ -23,20 +23,20 @@ module.exports = function (passport) {
       if (err) return next(err)
       if (!foundUser) {
         console.log('no user found by this email')
-        return next(err, false)
-        //   req.flash('flash', {
-        //   type: 'warning',
-        //   message: 'No user found by this email'
-        // })
+        return next(err, false,
+          req.flash('flash', {
+            type: 'warning',
+            message: 'Wrong email. Please enter a valid email'
+          }))
       }
 
       if (!foundUser.validPassword(givenpassword)) {
         console.log('Access denied, wrong password')
-        return next(null, false)
-        //   req.flash('flash', {
-        //   type: 'danger',
-        //   message: 'Access Denied, wrong password'
-        // })
+        return next(null, false,
+          req.flash('flash', {
+            type: 'danger',
+            message: 'Access Denied, please enter the correct password'
+          }))
       }
 
       return next(err, foundUser)
@@ -50,16 +50,16 @@ module.exports = function (passport) {
   }, function (req, email, password, next) { // done here is the next also
     // Find user with email as given from the callback
     User.findOne({'local.email': email}, function (err, foundUser) {
-      console.log('foundUser is: '+ foundUser)
+      console.log('foundUser is: ' + foundUser)
 
       if (foundUser) {
         // function(err,theNewUser, flashData)
         console.log('the same user with same email found')
-        return next(null, false)
-        //   req.flash('flash', {
-        //   type: 'warning',
-        //   message: 'This email is already in use'
-        // })
+        return next(null, false,
+          req.flash('flash', {
+          type: 'warning',
+          message: 'This email is already in use'
+        }))
       } else {
       // if not found = new User
     // save user to db, password is hashed
@@ -77,13 +77,13 @@ module.exports = function (passport) {
         })
         console.log(newUser)
         newUser.save(function (err, output) {
-        if(err) console.log("Error on new user:" + err)
-        console.log('Hi new user')
-        return next(null, newUser)
-        // req.flash('flash', {
-        //   type: 'success',
-        //   message: 'Hello new user ' + newUser.local.email
-        // })
+          if (err) console.log('Error on new user:' + err)
+          console.log('Hi new user')
+          return next(null, newUser,
+        req.flash('flash', {
+          type: 'success',
+          message: 'Hello new user ' + newUser.local.email
+        }))
         })
       }
     })

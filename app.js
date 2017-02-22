@@ -13,7 +13,7 @@ var passport = require('passport')
 
 // all you need for flash data
 var session = require('express-session')
-// var flash = require('connect-flash')
+var flash = require('connect-flash')
 var cookieParser = require('cookie-parser')
 // connect-mongo needs session its put after cookie parser
 var MongoStore = require('connect-mongo')(session)
@@ -38,7 +38,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 require('./config/ppConfig')(passport)
-// app.use(flash())
+ app.use(flash())
 
 // app.use(methodOverride('_method'))
 // app.use(logger('dev'))
@@ -73,29 +73,27 @@ app.use(express.static('public'))
 app.set('views', path.join(__dirname, 'views'))
 
 function isNotLoggedIn (req, res, next) {
-  if (req.isAuthenticated() === false) {
-    console.log('please log in')
-    res.redirect('/login')
-  } else {
-    next()
-  }
-  // req.flash('flash', {
-  //   type: 'danger',
-  //    message: 'please log in'
-  //  })
+  if (req.isAuthenticated()) return next()
+   else {
+  req.flash('flash', {
+    type: 'danger',
+     message: 'please log in'
+   })
+   res.redirect('/login')
+}
 }
 
 function isLoggedIn (req, res, next) {
   if (req.isAuthenticated() === true) {
     next()
   } else {
+    req.flash('flash', {
+      type: 'danger',
+      message: 'Restricted page, please log in'
+    })
     console.log('restricted page, please log in')
     res.redirect('/login')
   }
-  // req.flash('flash', {
-  //   type: 'danger',
-  //   message: 'Restricted page, please log in'
-  // })
 }
 
 const UserRouter = require('./routes/user_router')
@@ -113,13 +111,13 @@ app.post('/signup', function (req, res) {
   })
   return signupStrategy(req, res)
 })
-app.use('/login', UserRouter)
+app.use('/login',UserRouter)
 
 /* ---------------------------------------------- all routes from now on will check if user is logged in ------- */
 
 // app.use(isLoggedIn)
 
-app.get('/homepage', isLoggedIn, function (req, res) {
+app.get('/homepage', isNotLoggedIn, function (req, res) {
   res.render('homepage')
 })
 
@@ -136,7 +134,7 @@ var dish1 = new Dish({
   'cost': 15,
   'prepTime': 25
 })
-dish1.save()
+//dish1.save()
 
 var dish2 = new Dish({
   'dishName': 'Pasta',
@@ -144,7 +142,7 @@ var dish2 = new Dish({
   'cost': 15,
   'prepTime': 15
 })
-dish2.save()
+//dish2.save()
 
 var dish3 = new Dish({
   'dishName': 'Biriyani',
@@ -152,16 +150,16 @@ var dish3 = new Dish({
   'cost': 15,
   'prepTime': 20
 })
-dish3.save()
+//dish3.save()
 
 var chef1 = new Chef({'name': 'Sruti Keerti Munukutla', 'intro': 'Cooking is the best stressbuster',
   'cuisines': ['Indian', 'Thai'],
   'recipes': [dish1.id, dish3.id]})
-chef1.save()
+//chef1.save()
 var chef2 = new Chef({'name': 'Prashant Gorthi', 'intro': 'Amateur chef who can cook up a storm',
   'cuisines': ['Indian', 'Thai', 'italian'],
   'recipes': [dish2.id]})
-   chef2.save()
+   //chef2.save()
 
 // app.use(session({
 //   secret: process.env.SESSION_SECRET,

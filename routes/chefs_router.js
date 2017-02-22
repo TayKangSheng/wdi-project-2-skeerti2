@@ -10,6 +10,8 @@ var Chef = require('../models/chef')
 
 router.get('/', chefController.list)
 router.get('/:id', chefController.show)
+router.post('/cuisines', chefController.listByCuisine)
+router.post('/favChef', chefController.listByFavChef)
 // router.get('/:id', postController.list)
 router.post('/:id', postController.create)
 

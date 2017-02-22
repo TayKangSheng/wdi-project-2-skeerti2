@@ -41,6 +41,26 @@ var chefController = {
               // console.log(req.params.comments)
         res.render('chefs/show', {chefItem: populatedChefItem})
       })
+  },
+
+  listByCuisine: (req, res) =>{
+    Chef.find({"cuisines": {$regex: req.body.search_query, $options: 'i'}}, function(err, output){
+      if(err){
+        console.error(err)
+        return
+      }
+      res.render('chefs/index', {chefList: output})
+    })
+  },
+
+  listByFavChef: (req, res) =>{
+    Chef.find({"name": {$regex: req.body.search_query_name, $options: 'i'}}, function(err, output){
+      if(err){
+        console.error(err)
+        return
+      }
+      res.render('chefs/index', {chefList: output})
+    })
   }
 }
 module.exports = chefController
