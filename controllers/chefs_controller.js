@@ -4,6 +4,49 @@ var Chef = require('../models/chef')
 var Post = require('../models/post')
 
 var chefController = {
+  // signup: (req, res) =>{
+  //   res.render('auth/sign-in-chef')
+  // },
+  profileChef: (req, res) => {
+    Chef.findById(req.user.id, function (err, output) {
+      if (err) {
+        console.error(err)
+        return
+      }
+      res.render('homepage-chef', {adminChefItem: output})
+    })
+  },
+  showChefEditForm: (req, res) => {
+    Chef.findById(req.params.id, function (err, output) {
+      if (err) {
+        console.error(err)
+        return
+      }
+      res.render('chefs/chefProfileEdit', {adminChefItem: output})
+    })
+  },
+  updateChef: (req, res) => {
+    Chef.findById(req.params.id, function(err, chefObj){
+      if(err){
+        console.error(err)
+        return
+      }
+      chefObj.local.name = req.body.chefs.name
+      chefObj.local.Address=req.body.chefs.Address
+      chefObj.local.intro = req.body.chefs.intro
+      chefObj.local.cuisines=req.body.chefs.cuisines
+
+      chefObj.save(function(err, updatedChef){
+        if(err){
+          console.error(err)
+          return
+        }
+        res.redirect('/chefs/logged-chef')
+      })
+    }
+
+    )
+  },
   list: (req, res) => {
     Chef.find({}, function (err, output) {
       if (err) {

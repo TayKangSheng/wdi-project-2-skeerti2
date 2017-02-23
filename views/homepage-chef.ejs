@@ -1,0 +1,17 @@
+<h1>Hi! Welcome <%=adminChefItem.local.name%></h1>
+<pre> isAuthenticated: <%= isAuthenticated %> </pre>
+<div class="panel panel-default">
+  <div class="panel-heading"><%=adminChefItem.local.name%></div>
+  <div class="panel-body">
+  <ul class="list-group">
+  <li class="list-group-item">Introduction: <%=adminChefItem.local.intro%></li>
+  <li class="list-group-item">Address: <%=adminChefItem.local.Address%></li>
+  <li class="list-group-item">Recipes: <%=adminChefItem.local.recipes%></li>
+  <li class="list-group-item">Cuisines: <%=adminChefItem.local.cuisines%></li>
+</ul>
+<div class="btn-group">
+  <p><a href=<%="/chefs/profileEdit/" + adminChefItem._id%> role="button" class="btn btn-info">Edit</a></p>
+
+</div>
+  </div>
+</div>

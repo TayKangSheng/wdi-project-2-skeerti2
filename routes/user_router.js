@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-  var loginStrategy = passport.authenticate('local-login', { // it will look for 'local-signup in passport strategy in passportConfig'
+  var loginStrategy = passport.authenticate('local-login-user', { // it will look for 'local-signup in passport strategy in passportConfig'
     successRedirect: '/homepage', // if succesful, go to '/' and so on
     failureRedirect: '/login',
     failureFlash: true // if some error in signup, say something is wrong
