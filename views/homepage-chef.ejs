@@ -6,7 +6,11 @@
   <ul class="list-group">
   <li class="list-group-item">Introduction: <%=adminChefItem.local.intro%></li>
   <li class="list-group-item">Address: <%=adminChefItem.local.Address%></li>
-  <li class="list-group-item">Recipes: <%=adminChefItem.local.recipes%></li>
+  <li class="list-group-item">Recipes:
+  <%adminChefItem.local.recipes.forEach(function(dishItem){%>
+    <%=dishItem.dishName+ ","%>
+  <%})%>
+</li>
   <li class="list-group-item">Cuisines: <%=adminChefItem.local.cuisines%></li>
 </ul>
 <div class="btn-group">

@@ -57,7 +57,6 @@ app.use(function (req, res, next) {
   res.locals.user = req.user
   // console.log('res.locals.user is '+res.locals.user)
   res.locals.isAuthenticated = req.isAuthenticated()
-  console.log('req.user is: '+req.user)
   next()
 })
 // var session = require('express-session')
