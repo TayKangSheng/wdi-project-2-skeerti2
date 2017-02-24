@@ -7,6 +7,7 @@ var chefController = {
   // signup: (req, res) =>{
   //   res.render('auth/sign-in-chef')
   // },
+
   profileChef: (req, res) => {
     Chef.findById(req.user.id, function (err, output) {
       if (err) {
@@ -26,18 +27,18 @@ var chefController = {
     })
   },
   updateChef: (req, res) => {
-    Chef.findById(req.params.id, function(err, chefObj){
-      if(err){
+    Chef.findById(req.params.id, function (err, chefObj) {
+      if (err) {
         console.error(err)
         return
       }
       chefObj.local.name = req.body.chefs.name
-      chefObj.local.Address=req.body.chefs.Address
+      chefObj.local.Address = req.body.chefs.Address
       chefObj.local.intro = req.body.chefs.intro
-      chefObj.local.cuisines=req.body.chefs.cuisines
+      chefObj.local.cuisines = req.body.chefs.cuisines
 
-      chefObj.save(function(err, updatedChef){
-        if(err){
+      chefObj.save(function (err, updatedChef) {
+        if (err) {
           console.error(err)
           return
         }
@@ -47,10 +48,21 @@ var chefController = {
 
     )
   },
+
+  delete: (req, res) => {
+    Chef.findByIdAndRemove(req.params.id, function (err, output) {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log('deleted item')
+      res.redirect('/signup-chef')
+    })
+  },
   list: (req, res) => {
     Chef.find({}, function (err, output) {
       if (err) {
-        console.console.error(err)
+        console.error(err)
         return
       }
       res.render('chefs/index', {chefList: output})
@@ -71,8 +83,8 @@ var chefController = {
     //         })
     // })
     Chef.findById(req.params.id)
-      .populate('recipes')
-      .populate('comments')
+      .populate('local.recipes')
+      .populate('local.comments')
       //  .populate('comments')
       .exec(function (err, populatedChefItem) {
         if (err) {
@@ -80,30 +92,35 @@ var chefController = {
           return
         }
       // req.params.comments.identifier = req.params.id
-        console.log(populatedChefItem)
+        console.log('populated chef item recipe is: ' + populatedChefItem)
               // console.log(req.params.comments)
         res.render('chefs/show', {chefItem: populatedChefItem})
       })
   },
 
   listByCuisine: (req, res) => {
-    Chef.find({'cuisines': {$regex: req.body.search_query, $options: 'i'}}, function (err, output) {
+    Chef.find({'local.cuisines': {$regex: req.body.search_query, $options: 'i'}}, function (err, output) {
       if (err) {
         console.error(err)
         return
       }
+      console.log(output)
       res.render('chefs/index', {chefList: output})
     })
   },
 
   listByFavChef: (req, res) => {
-    Chef.find({'name': {$regex: req.body.search_query_name, $options: 'i'}}, function (err, output) {
+    Chef.find({'local.name': {$regex: req.body.search_query_name, $options: 'i'}}, function (err, output) {
       if (err) {
         console.error(err)
         return
       }
+      console.log(output)
       res.render('chefs/index', {chefList: output})
     })
+  },
+  checkoutPage: (req, res) => {
+      res.render('chefs/placeorder')
   }
 }
 module.exports = chefController

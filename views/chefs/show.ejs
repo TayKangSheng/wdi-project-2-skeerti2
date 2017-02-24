@@ -5,8 +5,8 @@
     </a>
   </div>
   <div class="media-body">
-    <h1 class="media-heading"><%=chefItem.name%></h1>
-    <%chefItem.recipes.forEach(function(recipeItem) {%>
+    <h1 class="media-heading"><%=chefItem.local.name%></h1>
+    <%chefItem.local.recipes.forEach(function(recipeItem) {%>
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title"><%=recipeItem.dishName%></h3>
@@ -16,7 +16,7 @@
             <li class="list-group-item">Ingredients: <%=recipeItem.ingredients%></li>
             <li class="list-group-item">Preparation time(mins): <%=recipeItem.prepTime%></li>
             <li class="list-group-item">Cost (SGD): <%=recipeItem.cost%>
-              <button type="button" class="btn btn-default">Place Order >> </button>
+              <a href="/chefs/:id/checkout" role="button">Place Order >></a>
             </li>
           </ul>
         </div>
@@ -27,7 +27,7 @@
       <div class="media-body">
         <h4 class="media-heading">Comments</h4>
       <ul class="list-group">
-        <%chefItem.comments.forEach(function(item){%>
+        <%chefItem.local.comments.forEach(function(item){%>
           <li class="list-group-item"><%=item.username%> : <%=item.content%></li>
         <%})%>
       </ul>

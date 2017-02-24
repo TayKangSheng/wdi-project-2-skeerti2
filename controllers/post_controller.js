@@ -7,7 +7,9 @@ var Post = require('../models/post')
 var postController = {
   create: (req, res) => {
     console.log('postController create')
+    console.log('the id of current user is '+ req.user.id)
     var chefId = req.params.id
+    console.log('id of the chef is' + chefId)
 
     // create new Post object and save to mongoDB
     let newPost = new Post({
@@ -16,21 +18,26 @@ var postController = {
       content: req.body.users.name
     })
     newPost.save(function (err, savedPost) {
-      if (err) throw err
+      if (err) {
+        console.error(err)
+        return
+      }
       var savedPostId = savedPost._id
       // update list of comments in chef object with id of new comment (post)
+      console.log('the id of the saved post is' + savedPostId)
+
       Chef.findByIdAndUpdate(chefId,
-        {$push: {'comments': savedPostId}},
+        {$push: {'local.comments': savedPostId}},
         {safe: true, upsert: true, new: true}
       )
-      .populate('comments')
+      .populate('local.comments')
       .exec(function (err, populatedChefItem) {
-          if (err) {
-            console.error(err)
-            return
-          }
-          res.redirect('/chefs/'+ chefId)
+        if (err) {
+          console.error(err)
+          return
         }
+        res.redirect('/chefs/' + chefId)
+      }
       )
     })
 

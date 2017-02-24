@@ -16,6 +16,7 @@ router.get('/signin-chef', function (req, res) {
 router.get('/logged-chef', chefController.profileChef)
 router.get('/profileEdit/:id', chefController.showChefEditForm)
 router.put('/:id', chefController.updateChef)
+router.delete('/profileEdit/:id', chefController.delete)
 
 // router.post('/logged-chef', chefController.createChef)
 router.get('/', isLoggedIn, chefController.list)
@@ -24,5 +25,7 @@ router.post('/cuisines', isLoggedIn, chefController.listByCuisine)
 router.post('/favChef', isLoggedIn, chefController.listByFavChef)
 // router.get('/:id', postController.list)
 router.post('/:id', isLoggedIn, postController.create)
+router.get('/:id/checkout', isLoggedIn, chefController.checkoutPage)
+
 
 module.exports = router
