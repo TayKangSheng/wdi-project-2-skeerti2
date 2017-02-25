@@ -5,7 +5,7 @@ var Post = require('../models/post')
 // var ObjectID = require('mongodb').ObjectID;
 
 var postController = {
-  create: (req, res) => {
+  create: (req, res, next) => {
     console.log('postController create')
     console.log('the id of current user is '+ req.user.id)
     var chefId = req.params.id
@@ -20,7 +20,7 @@ var postController = {
     newPost.save(function (err, savedPost) {
       if (err) {
         console.error(err)
-        return
+        return next(err)
       }
       var savedPostId = savedPost._id
       // update list of comments in chef object with id of new comment (post)
@@ -34,7 +34,7 @@ var postController = {
       .exec(function (err, populatedChefItem) {
         if (err) {
           console.error(err)
-          return
+          return next(err)
         }
         res.redirect('/chefs/' + chefId)
       }

@@ -206,11 +206,25 @@ var chef2 = new Chef({
 })
 // chef2.save()
 
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave: false,
-//   saveUninitialized: true
-// }))
+if (app.get('env') === 'development') {
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500)
+    res.render('error', {
+      message: err.message,
+      error: err
+    })
+  })
+}
+
+// when public uses the website from Heroku (production env), they shouldnt be able to see the stack trace
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500)
+  res.render('error', {
+    message: err.message,
+    error: {}
+  })
+})
+
 app.listen(port, function () {
-  console.log('kitchen wonders is running on port 3000')
+  console.log('kitchen wonders is running on port' + port)
 })

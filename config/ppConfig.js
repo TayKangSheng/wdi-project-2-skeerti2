@@ -170,7 +170,7 @@ module.exports = function (passport) {
         newChef.save(function (err, output) {
           if (err) {
             console.log('Error on new Chef:' + err)
-            return next(err)
+            return next(null, false, req.flash('danger', 'This name is already in use. Please choose another name.'))
           }
           console.log('Hi new Chef')
           return next(null, newChef, req.flash('success', 'Hello new Chef ' + newChef.local.name))

@@ -2,7 +2,7 @@ var express = require('express')
 router = express.Router()
 var User = require('../models/user')
 var passport = require('passport')
-// var UserController = require('../controllers/user_controller')
+
 
 router.get('/', function (req, res) {
   res.render('auth/login')
