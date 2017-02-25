@@ -92,7 +92,7 @@ module.exports = function (passport) {
           }
 
           console.log('Hi new user')
-          return next(null, newUser, req.flash('success', 'Hello new user ' + newUser.local.email))
+          return next(null, newUser, req.flash('success', 'Hello new user ' + newUser.local.firstName))
         // req.flash('flash', {
         //   type: 'success',
         //   message: 'Hello new user ' + newUser.local.email
@@ -173,7 +173,7 @@ module.exports = function (passport) {
             return next(err)
           }
           console.log('Hi new Chef')
-          return next(null, newChef, req.flash('success', 'Hello new Chef ' + newChef.local.email))
+          return next(null, newChef, req.flash('success', 'Hello new Chef ' + newChef.local.name))
         })
       }
     })

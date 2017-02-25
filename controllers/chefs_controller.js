@@ -10,6 +10,10 @@ var chefController = {
   // },
 
   profileChef: (req, res) => {
+    if(req.user===undefined){
+      console.log('req.user is undefined. redirecting back to login')
+      res.redirect('/chefs/logged-chef')
+    }
     Chef.findById(req.user.id, function (err, output) {
       if (err) {
         console.error(err)

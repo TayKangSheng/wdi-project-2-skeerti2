@@ -21,7 +21,7 @@
   </div>
 
   <div class="form-group row">
-    <label class="form-control" for="recipes">Dish Name</label>
+    <label class="form-control" for="recipes">Add a new Dish? </label>
     <input type="text" class="form-control" name="chefs[dishName]" value="<%=adminChefItem.local.recipes.dishName%>" id="dishName" placeholder="Name of dish">
   </div>
 
@@ -39,9 +39,12 @@
     <label class="form-control" for="prepTime">Preparation Time</label>
     <input type="number" class="form-control" name="chefs[prepTime]" value="<%=adminChefItem.local.recipes.prepTime%>" id="prepTime" placeholder="prepTime">
   </div>
-
+  <div class="form-group row">
   <button type="submit" class="btn btn-success">Save</button>
+  </div>
   </form>
   <form class="" action="/chefs/profileEdit/<%=adminChefItem._id%>?_method=DELETE" method="post">
-    <button type="submit" name="button">DELETE</button>
+    <div class="form-group row">
+    <button class="btn btn-success" type="submit" name="button">Delete Chef Account</button>
+    </div>
   </form>

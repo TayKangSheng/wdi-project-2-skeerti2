@@ -1,3 +1,87 @@
+/*@import url('https://fonts.googleapis.com/css?family=Pacifico');*/
+/*@import url('https://fonts.googleapis.com/css?family=Oleo+Script');*/
+/*@import url('https://fonts.googleapis.com/css?family=Domine');*/
+/*@import url('https://fonts.googleapis.com/css?family=Lobster+Two');*/
+/*@import url('https://fonts.googleapis.com/css?family=Cookie');*/
+/*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
+@import url('https://fonts.googleapis.com/css?family=Crete+Round');
+
 body{
-  background-color: #EDCF8E
+  /*font-family: 'Pacifico', cursive;*/
+  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Crete Round', serif;
+  /*font-family: 'Oleo Script', cursive;*/
+  /*font-family: 'Domine', serif;*/
+  /*font-family: 'Cookie', cursive;*/
+  font-size: 20px;
+  background-image: url("/images/background1.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+
+}
+
+.login-customer{
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  /*position: relative;*/
+  /*align-items: center;*/
+}
+.logo{
+  /*float: right;*/
+  height: 200px;
+  width: 200px;
+  /*margin-left: -20px;*/
+  /*margin-bottom: 50px;*/
+  border-radius: 80px;
+  border: solid;
+  border-color: orange;
+}
+
+.chef-login{
+  text-align: center;
+  color: white;
+}
+
+.chef-image{
+  border-radius: 100px;
+  border: solid;
+  border-color: orange;
+}
+.sign-in-chef{
+  text-align: center;
+  color: white;
+}
+.signin-customer{
+  text-align: center;
+  color: white;
+}
+/*.img-responsive{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}*/
+.login-customer-form{
+  width: 360px;
+}
+.login-chef-form{
+  width: 360px;
+}
+.signin-chef-form{
+  width: 590px;
+}
+.signin-customer-form{
+  width: 590px;
+}
+.homepage-img{
+  height: 425px;
+  width: auto;
+  max-height: 425px;
+}
+
+.media-object{
+  border-radius: 200px;
+  border: solid;
+  border-color: black;
 }

@@ -1,3 +1,4 @@
+
 <div class="media">
   <div class="media-left">
     <a href="#">
@@ -6,6 +7,7 @@
   </div>
   <div class="media-body">
     <h1 class="media-heading"><%=chefItem.local.name%></h1>
+    <h3>Cuisines : <%=chefItem.local.cuisines%></h3>
     <%chefItem.local.recipes.forEach(function(recipeItem) {%>
       <div class="panel panel-primary">
         <div class="panel-heading">

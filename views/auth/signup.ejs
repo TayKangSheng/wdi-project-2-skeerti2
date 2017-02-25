@@ -1,8 +1,11 @@
+<div class="signin-customer">
 <h1>Welcome to Kitchen Wonders!</h1>
 <h3>Please sign up to proceed</h3>
+</div>
 <%# <h4>Which account do you want to create?</h4>%>
 <% include ../partials/flash %>
 <form action="/signup" method="post">
+  <div class="signin-customer-form">
   <div class="form-group">
     <label for="firstName">First Name</label>
     <input type="text" class="form-control" name="firstName" id="firstName" placeholder="firstName">
@@ -27,6 +30,8 @@
     <label for="password">Password</label>
     <input type="password" class="form-control" name="password" id="password" placeholder="password">
   </div>
+  <div class="form-group">
 <button class="btn btn-primary" type="submit">Submit</button>
+</div>
 </div>
 </form>

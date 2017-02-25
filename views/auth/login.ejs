@@ -1,7 +1,13 @@
+<div class="login-customer">
+<img class="logo" src="/images/logo.PNG">
 <h1>Welcome to Kitchen Wonders!</h1>
+</div>
+
 <h3>Please login to proceed</h3>
 <% include ../partials/flash %>
+
 <form action="/login" method="post">
+  <div class="login-customer-form">
   <div class="form-group">
     <label for="email">Email address</label>
     <input type="email" class="form-control" name="email" id="email" placeholder="email">
