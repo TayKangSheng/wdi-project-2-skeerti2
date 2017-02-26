@@ -59,7 +59,14 @@ module.exports = function (passport) {
   }, function (req, email, password, next) { // done here is the next also
     // Find user with email as given from the callback
     User.findOne({'local.email': email}, function (err, foundUser) {
+      //error handler if error in finding user by email.
+      // if(err)
+      // {
+      //   console.error(err)
+      //   return next(err)
+      // }
       console.log('foundUser is: ' + foundUser)
+
 
       if (foundUser) {
         // function(err,theNewUser, flashData)

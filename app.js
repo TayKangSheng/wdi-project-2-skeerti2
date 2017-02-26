@@ -66,12 +66,6 @@ var Chef = require('./models/chef')
 var Dish = require('./models/dish')
 var User = require('./models/user')
 
-// app.set('view engine', 'ejs')
-
-// app.configure(function(){
-//   app.use(express.bodyParser())
-//     app.use(app.router)
-// })
 var isLoggedIn = require('./middleware/isLoggedIn')
 // app.use(isLoggedIn)
 function isNotLoggedIn (req, res, next) {
@@ -99,12 +93,12 @@ app.get('/signup-chef', function (req, res) {
 // for the form submission of chef to create a chef account and perfrom authentication
 app.post('/chefs/signin-chef', function (req, res, next) {
   console.log('/chefs/signin-chef')
-  var signupStrategy = passport.authenticate('local-signup-chef', { // it will look for 'local-signup in passport strategy in passportConfig'
+  var signupStrategy = passport.authenticate('local-signup-chef', { // it will look for 'local-signup-chef in passport strategy in passportConfig'
     successRedirect: '/chefs/logged-chef', // if succesful, go to '/' and so on
     failureRedirect: '/signup-chef',
     failureFlash: true // if some error in signup, say something is wrong
   })
-
+  //the signupStrategy being called here and now goes to ppConfig callback function for local-signup-chef
   return signupStrategy(req, res, next)
 })
 // for the login of an existing chef
@@ -113,14 +107,15 @@ app.get('/login-chef', function (req, res) {
   res.render('auth/login-chef')
 })
 
+//go to chefs/logged-chefs once the chef authentication is successful
 app.post('/chefs/logged-chef', function (req, res, next) {
   console.log('inside log in chef post')
-  var loginStrategy = passport.authenticate('local-login-chef', { // it will look for 'local-signup in passport strategy in passportConfig'
+  var loginStrategy = passport.authenticate('local-login-chef', { // it will look for 'local-login-chef in passport strategy in passportConfig'
     successRedirect: '/chefs/logged-chef', // if succesful, go to '/' and so on
     failureRedirect: '/login-chef',
     failureFlash: true // if some error in signup, say something is wrong
   })
-  return loginStrategy(req, res, next)
+  return loginStrategy(req, res, next) //callback function in ppConfig is called
 })
 
 // USER
@@ -128,7 +123,9 @@ app.post('/chefs/logged-chef', function (req, res, next) {
 app.get('/signup', function (req, res) {
   res.render('auth/signup')
 })
-// in the sign-up page, now fill the sign up form
+// in the sign-up page, now fill the sign up form. when customer fills in sighnup form and clicks submit,
+//post request is sent to the server with url /signup. This request is handled in below code snippet.
+//Go to /homepage once authentication of user is succesful
 app.post('/signup', function (req, res, next) {
   var signupStrategy = passport.authenticate('local-signup-user', { // it will look for 'local-signup in passport strategy in passportConfig'
     successRedirect: '/homepage', // if succesful, go to '/' and so on

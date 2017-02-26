@@ -10,6 +10,7 @@ var isLoggedInChef= require('../middleware/isLoggedInChef')
 // res.send('welcome to the chefs page!')
 // })
 // router.get('/signup-chef', chefController.signup)
+//the routes for chef account
 router.get('/signin-chef', function (req, res) {
   res.render('homepage-chef')
 })
@@ -20,6 +21,7 @@ router.put('/:id', isLoggedInChef, chefController.updateChef)
 router.delete('/profileEdit/:id', isLoggedInChef, chefController.delete)
 
 // router.post('/logged-chef', chefController.createChef)
+//routes for User account
 router.get('/', isLoggedIn, chefController.list)
 router.get('/:id', isLoggedIn, chefController.show)
 router.post('/cuisines', isLoggedIn, chefController.listByCuisine)
