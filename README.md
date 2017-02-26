@@ -38,4 +38,5 @@ User stories were created on paper at the beginning of the project. However, Tre
 * The initial idea of the project was to have just the customer account. The chefs and dishes were hardcoded in app.js and comments were enabled via form.
 * Since I felt that adding chef account would increase the usability of the application, I began working on it halfway into my project. Though it resulted in the scope creep of my project, it was definitely a good learning experience.
 * Current version does not include image upload of in chef account (i.e., the ability for each chef to add his/her own image).
+* I plan to add images per recipe too, as the customer can see the dish also while placing an order.
 * I wish to refractor my code and make it more modular and adhere to best practices.
