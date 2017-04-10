@@ -1,14 +1,16 @@
 <div class="container">
-<h1>List of all our Chefs</h1>
+<h1 style="color:white">List of all our Chefs</h1>
   <%chefList.forEach(function(chefItem){ %>
-    <div class= "panel panel-primary">
+    <div class= "panel panel-default">
+    <div class= "panel custom-panel">
     <!--a href="#" class="list-group-item"-->
     <div class="panel-heading">
     <%=chefItem.local.name%>
     </div>
+    </div>
     <div class="panel-body">
     <%=chefItem.local.intro%>
-    <a class="pull-right" href=<%="/chefs/"+ chefItem._id%>>Know more about <%=chefItem.local.name%>s specialities</a>
+    <a style="color:#1E90FF" class="pull-right" href=<%="/chefs/"+ chefItem._id%>>Know more about <%=chefItem.local.name%>s specialities >> </a>
     </div>
     <!--</a>-->
     </div>

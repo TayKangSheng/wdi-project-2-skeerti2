@@ -7,6 +7,7 @@ module.exports = function (passport) {
   passport.serializeUser(function (user, next) {
     next(null, user.id)
   })
+  //gives user id to session
 
   passport.deserializeUser(function (id, next) {
     User.findById(id, function (err, user) {

@@ -15,9 +15,9 @@ var passport = require('passport')
 var session = require('express-session')
 var flash = require('connect-flash')
 var cookieParser = require('cookie-parser')
+
 // connect-mongo needs session its put after cookie parser
 var MongoStore = require('connect-mongo')(session)
-
 var mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -53,20 +53,25 @@ app.set('views', path.join(__dirname, 'views'))
 
 const port = process.env.PORT || 3000
 
+var Chef = require('./models/chef')
+var Dish = require('./models/dish')
+var User = require('./models/user')
+
 app.use(function (req, res, next) {
   // console.log('req.user is: ' +req.user)
   res.locals.alert = req.flash()
   res.locals.user = req.user
+  // to be used as a check for navbar conditions for Chef & User accounts
+  res.locals.isCustomer = req.user instanceof User
+  res.locals.isChef = req.user instanceof Chef
   // console.log('res.locals.user is '+res.locals.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   next()
 })
 // var session = require('express-session')
-var Chef = require('./models/chef')
-var Dish = require('./models/dish')
-var User = require('./models/user')
 
 var isLoggedIn = require('./middleware/isLoggedIn')
+var isLoggedInChef = require('./middleware/isLoggedInChef')
 // app.use(isLoggedIn)
 function isNotLoggedIn (req, res, next) {
   if (req.isAuthenticated()) return next()
@@ -83,12 +88,30 @@ function isNotLoggedIn (req, res, next) {
 const UserRouter = require('./routes/user_router')
 // the homepage -> localhost:3000
 app.get('/', function (req, res) {
-  res.render('auth/login')
+  if (req.isAuthenticated() === true) {
+    req.flash('warning', 'You have already logged in')
+    if (req.user instanceof User) {
+      res.redirect('/homepage')
+    } else {
+      res.redirect('/chefs/logged-chef')
+    }
+  } else {
+    res.render('auth/login')
+  }
 })
 
 // for sign-up of the chef
 app.get('/signup-chef', function (req, res) {
-  res.render('auth/sign-in-chef')
+  if (req.isAuthenticated() === true) {
+    req.flash('warning', 'You have already signed-up')
+    if (req.user instanceof Chef) {
+      res.redirect('/chefs/logged-chef')
+    } else {
+      res.redirect('/homepage')
+    }
+  } else {
+    res.render('auth/sign-in-chef')
+  }
 })
 // for the form submission of chef to create a chef account and perfrom authentication
 app.post('/chefs/signin-chef', function (req, res, next) {
@@ -98,16 +121,25 @@ app.post('/chefs/signin-chef', function (req, res, next) {
     failureRedirect: '/signup-chef',
     failureFlash: true // if some error in signup, say something is wrong
   })
-  //the signupStrategy being called here and now goes to ppConfig callback function for local-signup-chef
+  // the signupStrategy being called here and now goes to ppConfig callback function for local-signup-chef
   return signupStrategy(req, res, next)
 })
 // for the login of an existing chef
 app.get('/login-chef', function (req, res) {
-  console.log('inside the login-chef get')
-  res.render('auth/login-chef')
+  if (req.isAuthenticated() === true) {
+    req.flash('warning', 'You are already logged in')
+    if (req.user instanceof Chef) {
+      res.redirect('/chefs/logged-chef')
+    } else {
+      res.redirect('/homepage')
+    }
+  } else {
+    console.log('inside the login-chef get')
+    res.render('auth/login-chef')
+  }
 })
 
-//go to chefs/logged-chefs once the chef authentication is successful
+// go to chefs/logged-chefs once the chef authentication is successful
 app.post('/chefs/logged-chef', function (req, res, next) {
   console.log('inside log in chef post')
   var loginStrategy = passport.authenticate('local-login-chef', { // it will look for 'local-login-chef in passport strategy in passportConfig'
@@ -115,17 +147,27 @@ app.post('/chefs/logged-chef', function (req, res, next) {
     failureRedirect: '/login-chef',
     failureFlash: true // if some error in signup, say something is wrong
   })
-  return loginStrategy(req, res, next) //callback function in ppConfig is called
+  return loginStrategy(req, res, next) // callback function in ppConfig is called
 })
 
 // USER
 // for the sign-up of a User, get the page
 app.get('/signup', function (req, res) {
-  res.render('auth/signup')
+  if (req.isAuthenticated() === true) {
+    console.log("User/Chef is already logged in. Redirect with flash message.")
+    req.flash('warning', 'You have already signed up')
+    if (req.user instanceof User) {
+      res.redirect('/homepage')
+    } else {
+      res.redirect('/chefs/logged-chef')
+    }
+  } else {
+    res.render('auth/signup')
+  }
 })
 // in the sign-up page, now fill the sign up form. when customer fills in sighnup form and clicks submit,
-//post request is sent to the server with url /signup. This request is handled in below code snippet.
-//Go to /homepage once authentication of user is succesful
+// post request is sent to the server with url /signup. This request is handled in below code snippet.
+// Go to /homepage once authentication of user is succesful
 app.post('/signup', function (req, res, next) {
   var signupStrategy = passport.authenticate('local-signup-user', { // it will look for 'local-signup in passport strategy in passportConfig'
     successRedirect: '/homepage', // if succesful, go to '/' and so on
@@ -142,7 +184,7 @@ app.use('/login', UserRouter)
 
 // app.use(isLoggedIn)
 
-app.get('/homepage', isNotLoggedIn, function (req, res) {
+app.get('/homepage', isLoggedIn, function (req, res) {
   res.render('homepage')
 })
 
@@ -152,56 +194,6 @@ app.get('/logout', function (req, res) {
 })
 
 app.use('/chefs', require('./routes/chefs_router'))
-
-var dish1 = new Dish({
-  'dishName': 'Thai Green Curry',
-  'ingredients': 'Rice, vegetables, coconut milk, spices',
-  'cost': 15,
-  'prepTime': 25
-})
-// dish1.save()
-
-var dish2 = new Dish({
-  'dishName': 'Pasta',
-  'ingredients': 'pasta, veggies, olive oil, jalapeneos',
-  'cost': 15,
-  'prepTime': 15
-})
- // dish2.save()
-
-var dish3 = new Dish({
-  'dishName': 'Biriyani',
-  'ingredients': 'Mixed rice dish, optional spices, optional vegetables, meats or seafood. Can be served with plain yogurt',
-  'cost': 15,
-  'prepTime': 20
-})
- // dish3.save()
-
-var chef1 = new Chef({
-  local: {
-    email: 'khateymunukutla@gmail.com',
-    password: 'khatey012',
-    name: 'Sruti Keerti Munukutla',
-    intro: 'Cooking is the best stressbuster',
-    cuisines: 'Indian, Western',
-    Address: '308 Clementi Avenue 4',
-    recipes: [dish1._id, dish3._id]
-  }
-})
-// chef1.save()
-
-var chef2 = new Chef({
-  local: {
-    email: 'pbgorthi@yahoo.com',
-    password: 'welcome1987',
-    name: 'Prashant Bhanu Gorthi',
-    intro: 'Amateur cook who likes potato',
-    cuisines: 'Italian',
-    Address: '10 Collyer Quay',
-    recipes: [dish2._id]
-  }
-})
-// chef2.save()
 
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {

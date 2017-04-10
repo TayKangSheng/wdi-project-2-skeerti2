@@ -1,7 +1,10 @@
-<h1>Hi! Welcome <%=adminChefItem.local.name%></h1>
+<h1 style="color:white">Hi! Welcome <%=adminChefItem.local.name%></h1>
 <pre> isAuthenticated: <%= isAuthenticated %> </pre>
+<% include ./partials/flash %>
 <div class="panel panel-default">
+  <div class="panel custom-panel">
   <div class="panel-heading"><%=adminChefItem.local.name%></div>
+  </div>
   <div class="panel-body">
   <ul class="list-group">
   <li class="list-group-item">Introduction: <%=adminChefItem.local.intro%></li>
@@ -14,7 +17,7 @@
   <li class="list-group-item">Cuisines: <%=adminChefItem.local.cuisines%></li>
 </ul>
 <div class="btn-group">
-  <p><a href=<%="/chefs/profileEdit/" + adminChefItem._id%> role="button" class="btn btn-info">Edit</a></p>
+  <p><a href=<%="/chefs/profileEdit/" + adminChefItem._id%> role="button" class="btn btn-success">Edit</a></p>
 </div>
   </div>
 </div>

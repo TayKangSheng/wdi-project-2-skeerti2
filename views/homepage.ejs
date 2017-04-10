@@ -1,10 +1,13 @@
-<h1>Kitchen Wonders</h1>
+<h1 style="color:white">Welcome to Kitchen Wonders</h1>
 
 <%# CAROUSEL%>
 <% include ./partials/flash %>
 <div class="container">
-  <br>
+  <div class="col-sm-12">
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="row">
+
+
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -41,26 +44,26 @@
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
+    </div>
+    </div>
   </div>
 </div>
 
-<div class="container marketing">
-
+<div class="container">
       <!-- Three columns of text below the carousel -->
-
-      <div class="col-lg-4">
-      <h2>Know your chefs</h2>
-    <p><a class="btn btn-default" href="/chefs" role="button">Go! »</a></p>
-    </div><!-- /.col-lg-4 -->
-
       <div class="row">
+        <div class="col-xs-3">
+        <h2>Know your chefs</h2>
+      <p><a class="btn btn-success" href="/chefs" role="button">Go! »</a></p>
+      </div><!-- /.col-lg-4 -->
+
         <div class="col-xs-3">
           <h2>Look for a Chef</h2>
           <form class="pull-down navbar-search" action="/chefs/favChef" method="post">
           <div class="input-group input-group-sm">
             <input type="text" class="form-control" name="search_query_name" placeholder="Look for your Favourite Chef">
             <span class="input-group-btn">
-              <button type="submit" class="btn">Go »</button>
+              <button type="submit" class="btn btn-success">Go »</button>
             </span>
           </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
@@ -73,9 +76,10 @@
           <div class="input-group input-group-sm">
             <input type="text" class="form-control" name="search_query" placeholder="Cuisine">
             <span class="input-group-btn">
-              <button type="submit" class="btn">Go »</button>
+              <button type="submit" class="btn btn-success">Go »</button>
             </span>
           </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
         </form>
       </div><!-- /.row -->
+    </div>

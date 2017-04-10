@@ -41,6 +41,8 @@ var chefController = {
     })
   },
   updateChef: (req, res, next) => {
+    // check if dishName is empty (or additionally check cost is null and ingredients is empty and prepTime is null)
+    if(req.body.chefs.dishName !== '') {
     let newDishObj = new Dish({
       dishName: req.body.chefs.dishName,
       cost: req.body.chefs.cost,
@@ -73,6 +75,26 @@ var chefController = {
           // console.log('the recipe output is' +output.local.recipes)
           res.redirect('/chefs/logged-chef')
         })
+      }
+      //if the dish name is not enetered, update the other values!
+      else {
+       Chef.findByIdAndUpdate(req.params.id,
+          {$set: {'local.name': req.body.chefs.name,
+            'local.Address': req.body.chefs.Address,
+            'local.intro': req.body.chefs.intro,
+            'local.cuisines': req.body.chefs.cuisines}
+          },
+          {safe: true, upsert: true, new: true})
+            .populate('local.recipes')
+            .exec(function (err, output) {
+              if (err) {
+                console.error(err)
+                return next(err)
+              }
+              // console.log('the recipe output is' +output.local.recipes)
+              res.redirect('/chefs/logged-chef')
+            })
+      }
   },
 
   delete: (req, res, next) => {

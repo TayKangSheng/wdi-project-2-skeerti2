@@ -78,10 +78,33 @@ body{
   height: 425px;
   width: auto;
   max-height: 425px;
+  opacity: 1.0;
 }
-
 .media-object{
   border-radius: 200px;
   border: solid;
   border-color: black;
+}
+
+.navbar-default{
+  background: none;
+  border-color: transparent;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+}
+.media .media-body .panel-default
+ .custom-class {
+  background-color: #2F242C;
+}
+
+.panel-default > .custom-panel{
+  background-color: #404040;
+  color: white;
+}
+
+.form-control > label{
+  background-color: #404040;
+  color: white;
 }

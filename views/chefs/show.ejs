@@ -9,16 +9,20 @@
     <h1 class="media-heading"><%=chefItem.local.name%></h1>
     <h3>Cuisines : <%=chefItem.local.cuisines%></h3>
     <%chefItem.local.recipes.forEach(function(recipeItem) {%>
-      <div class="panel panel-primary">
+      <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><%=recipeItem.dishName%></h3>
+          <h3  class="panel-title"><%=recipeItem.dishName%></h3>
         </div>
         <div class="panel-body">
           <ul class="list-group">
             <li class="list-group-item">Ingredients: <%=recipeItem.ingredients%></li>
             <li class="list-group-item">Preparation time(mins): <%=recipeItem.prepTime%></li>
             <li class="list-group-item">Cost (SGD): <%=recipeItem.cost%>
-              <a href="/chefs/:id/checkout" role="button">Place Order >></a>
+              <form action= <%="/chefs/:id/checkout"%> method="post">
+              <div class="form-group">
+              <input type="submit" value="Place Order" class="btn btn-success">
+              </div>
+              </form>
             </li>
           </ul>
         </div>

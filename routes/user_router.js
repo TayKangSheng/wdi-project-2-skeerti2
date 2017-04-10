@@ -5,7 +5,17 @@ var passport = require('passport')
 
 
 router.get('/', function (req, res) {
-  res.render('auth/login')
+  console.log("User router: " + req.isAuthenticated())
+  if (req.isAuthenticated() === true) {
+    req.flash('warning', 'You have already logged in')
+    if (req.user instanceof User) {
+      res.redirect('/homepage')
+    } else {
+      res.redirect('/chefs/logged-chef')
+    }
+  } else {
+    res.render('auth/login')
+  }
 })
 
 router.post('/', function (req, res) {

@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs')
 
 var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
 let UserSchema = new mongoose.Schema({
-  local : {
+  local: {
     firstName: String,
     LastName: String,
     Address: String,
